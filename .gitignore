@@ -1,42 +1,80 @@
-# See http://help.github.com/ignore-files/ for more about ignoring files.
+# ignore files for git
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
 
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
+# Packages #
+############
+# it's better to unpack these files and commit the raw source
+# git has its own built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+#*.jar
+*.rar
+*.tar
+*.zip
+*.war
+*.ear
+*.rpm
 
-# IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
+# Directories & config files #
+##############################
+CVS/
+bin/
+build/
+target/
+test-output/
+dist/
+logs/
+node_modules/
+coverage/
+cmake-build-debug/
+tmp
+tmp/
+out/
+out
+.metadata/
+.plugins/
 .settings/
-*.sublime-workspace
+.JETEmitters/
+.svn/
+.iml/
+.idea/
+.angular/
+.gradle/
+*.classpath
+*.project
+*.tern-project
+.gitignore
+.recommenders
+.vagrant
+.idea
+*.iml
 
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
+# Logs and databases #
+######################
+*.log
+*.tlog
+#*.sql
+#*.sqlite
 
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
-
-# System files
+# OS generated files #
+######################
+.lock
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
 Thumbs.db
+*.db
