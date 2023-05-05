@@ -3,11 +3,14 @@
         <td *ngFor="let cell of row" id="{{'cell-' + cell.id}}" 
         [ngClass]="{'hidden' : !cell.shown, 'hola' : true && cell.shown}" >
             {{cell.id}}
-            <div *ngIf="cell.hero" id="hero"></div>
+            <div *ngIf="cell.hero" id="hero" class="direction-{{game.heroDirection}}">🦸</div>
         </td>
     </tr>
 </table>
-<button type="button" (click)="moveHeroUp()">UP</button>
-<button type="button" (click)="moveHeroDown()">DOWN</button>
-<button type="button" (click)="moveHeroLeft()">LEFT</button>
-<button type="button" (click)="moveHeroRight()">RIGHT</button>
+<button type="button" (click)="game.turnLeftHero()">TURN LEFT</button>
+<button type="button" (click)="game.moveHero()">MOVE</button>
+<button type="button" (click)="game.turnRightHero()">TURN RIGHT</button>
+<!--button type="button" (click)="game.moveHeroUp()">UP</button>
+<button type="button" (click)="game.moveHeroDown()">DOWN</button>
+<button type="button" (click)="game.moveHeroLeft()">LEFT</button>
+<button type="button" (click)="game.moveHeroRight()">RIGHT</button-->
