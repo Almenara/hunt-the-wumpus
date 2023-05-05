@@ -1,1 +1,5 @@
-<p>game works!</p>
+<table>
+    <tr *ngFor="let row of game.board">
+        <td *ngFor="let column of row" id="{{'cell-' + column}}"></td>
+    </tr>
+</table>
