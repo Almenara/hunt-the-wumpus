@@ -107,4 +107,7 @@ export class game{
             this.board[this.heroPosition.row][this.heroPosition.col].addHero();
         }
     }
+    shot(){
+        if(this.arrows != 0) this.arrows--;
+    }
 }
