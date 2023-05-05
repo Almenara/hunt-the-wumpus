@@ -1,10 +1,18 @@
 import { cell } from "./cell.model";
 
+enum Direction {
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT,
+}
+
 export class game{
-    cells   : number;
-    holes   : number;
-    arrows  : number;
-    heroPosition: {row : number , col : number} = {row : 0, col : 0}
+    cells           : number;
+    holes           : number;
+    arrows          : number;
+    heroPosition    : {row : number , col : number} = {row : 0, col : 0};
+    heroDirection   : Direction = Direction.UP;
 
     board   : cell[][] = [];   
 
@@ -46,6 +54,31 @@ export class game{
         this.board[this.heroPosition.row][this.heroPosition.col].addHero();
     }
 
+    turnLeftHero(){
+        this.heroDirection = this.heroDirection == 0 ? 3 : this.heroDirection - 1
+    }
+
+    turnRightHero(){
+        this.heroDirection = this.heroDirection == 3 ? 0 : this.heroDirection + 1
+    }
+
+    moveHero(){
+        switch (this.heroDirection) {
+            case Direction.UP:
+                this.moveHeroUp();
+                break;
+            case Direction.DOWN:
+                this.moveHeroDown();
+                break;
+            case Direction.LEFT:
+                this.moveHeroLeft();
+                break;
+            case Direction.RIGHT:
+                this.moveHeroRight();
+                break;
+         }
+    }
+
     moveHeroUp(){
         if(this.heroPosition.row > 0){
             this.board[this.heroPosition.row][this.heroPosition.col].removeHero();
@@ -74,5 +107,4 @@ export class game{
             this.board[this.heroPosition.row][this.heroPosition.col].addHero();
         }
     }
-
 }
