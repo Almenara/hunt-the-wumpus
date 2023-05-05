@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { game } from 'src/app/models/game.model';
 
 @Component({
   selector: 'app-starter',
@@ -8,7 +9,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class StarterComponent {
   public gameStarted : boolean = false;
-  
+  public game! : game;
+
   public gameOptionsForm: FormGroup = this.fb.group({
     cells:          [4, [Validators.required, Validators.min(4)]],
     holes:          [2, [Validators.required, Validators.min(2)]],
@@ -21,5 +23,6 @@ export class StarterComponent {
   
   startGame() {
     this.gameStarted = true;
+    this.game = new game(this.gameOptionsForm.value)
   }
 }
