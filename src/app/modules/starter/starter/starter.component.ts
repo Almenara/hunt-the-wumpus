@@ -22,7 +22,7 @@ export class StarterComponent {
   ){}
   
   startGame() {
+    this.game = new game(this.gameOptionsForm.value);
     this.gameStarted = true;
-    this.game = new game(this.gameOptionsForm.value)
   }
 }

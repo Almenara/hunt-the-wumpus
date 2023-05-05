@@ -1,0 +1,12 @@
+table{
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid black;
+    tr{
+        height: 100px;
+        td{
+            width: 100px;
+            border: 1px solid black;
+        }
+    }
+}

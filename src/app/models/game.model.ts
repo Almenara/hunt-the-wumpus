@@ -24,6 +24,11 @@ export class game{
             this.board.push(row);
             
         }
-        console.log(this.board)
+        this.addGameElementsToBoard();
+        //console.log(this.board)
+    }
+
+    addGameElementsToBoard(){
+
     }
 }

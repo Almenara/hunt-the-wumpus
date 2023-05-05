@@ -13,7 +13,7 @@
     </fieldset>
     
     <fieldset>
-        <button type="submit" class="mt-4" [disabled]="!gameOptionsForm.valid" (click)="startGame()">Start</button>
+        <button type="button" class="mt-4" [disabled]="!gameOptionsForm.valid" (click)="startGame()">Start</button>
     </fieldset>
 </form>
-<app-game *ngIf="gameStarted"></app-game>
+<app-game *ngIf="gameStarted" [game]="game"></app-game>
