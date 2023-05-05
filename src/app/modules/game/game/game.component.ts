@@ -15,6 +15,19 @@ export class GameComponent implements OnInit {
   }
   
   ngOnInit() {
-    console.log(this.game)
+    console.log(this.game);
+  }
+  moveHeroUp(){
+    this.game.moveHeroUp();
+  }
+  moveHeroDown(){
+    this.game.moveHeroDown();
+  }
+  moveHeroLeft(){
+    this.game.moveHeroLeft();
+  }
+  moveHeroRight(){
+    this.game.moveHeroRight();
   }
 }
+

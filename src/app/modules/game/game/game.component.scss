@@ -1,12 +1,35 @@
 table{
     border-collapse: separate;
     border-spacing: 0;
-    border: 1px solid black;
+    border: 1px solid gray;
     tr{
         height: 100px;
         td{
+            position: relative;
             width: 100px;
-            border: 1px solid black;
+            border: 1px solid gray;
+            &.hidden{
+                background-color: black;
+            }
+            #hero{
+                position: absolute;
+                display: flex;
+                height: 100%;
+                width: 100%;
+                top: 0;
+                left: 0;
+                &::after{
+                    position: absolute;
+                    display: flex;
+                    height: 100%;
+                    width: 100%;
+                    align-items: center;
+                    justify-content: center;
+                    content:"🦸";
+                    font-size: 70px;
+                }
+            }
         }
+
     }
 }

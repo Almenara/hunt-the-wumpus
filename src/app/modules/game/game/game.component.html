@@ -1,5 +1,13 @@
 <table>
     <tr *ngFor="let row of game.board">
-        <td *ngFor="let column of row" id="{{'cell-' + column}}"></td>
+        <td *ngFor="let cell of row" id="{{'cell-' + cell.id}}" 
+        [ngClass]="{'hidden' : !cell.shown, 'hola' : true && cell.shown}" >
+            {{cell.id}}
+            <div *ngIf="cell.hero" id="hero"></div>
+        </td>
     </tr>
 </table>
+<button type="button" (click)="moveHeroUp()">UP</button>
+<button type="button" (click)="moveHeroDown()">DOWN</button>
+<button type="button" (click)="moveHeroLeft()">LEFT</button>
+<button type="button" (click)="moveHeroRight()">RIGHT</button>
