@@ -7,11 +7,11 @@ import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
-    GameComponent
+    //GameComponent
   ],
   imports: [
     CommonModule,
-    GameRoutingModule
+    //GameRoutingModule
   ]
 })
 export class GameModule { }
