@@ -7,7 +7,6 @@ export class content{
     takeable : boolean;
     name     : string;
     icon     : string;   
-    alife    : boolean;
 
     constructor(data: any){
         this.type       = data.type;
@@ -15,7 +14,6 @@ export class content{
         this.takeable   = data.takeable;
         this.name       = data.name;
         this.icon       = data.icon
-        this.alife      = data.alife
     }
 
     destroy(){

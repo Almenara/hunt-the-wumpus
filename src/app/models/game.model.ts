@@ -1,3 +1,4 @@
+import { content } from './content.model';
 import { directions } from "./enums/directions.enum";
 import { types } from "./enums/types.enum";
 
@@ -62,7 +63,6 @@ export class game{
                 kill: false, 
                 takeable: true, 
                 name: 'gold', 
-                alife: false, 
                 icon: '💰'
             });
         else this.addGoldToBoard();
@@ -77,7 +77,6 @@ export class game{
                 kill: true, 
                 takeable: false, 
                 name: 'monster', 
-                alife: true, 
                 icon: '🧌'
             });
             this.MonsterPosition = {row,col};
@@ -92,8 +91,7 @@ export class game{
                 type: types.TRACK,
                 kill: false, 
                 takeable: false, 
-                name: 'monsterTruck', 
-                alife: false, 
+                name: 'monsterTrack', 
                 icon: '💩'
             });
         }
@@ -102,8 +100,7 @@ export class game{
                 type: types.TRACK,
                 kill: false, 
                 takeable: false, 
-                name: 'monsterTruck', 
-                alife: false, 
+                name: 'monsterTrack', 
                 icon: '💩'
             });
         }
@@ -112,8 +109,7 @@ export class game{
                 type: types.TRACK,
                 kill: false, 
                 takeable: false, 
-                name: 'monsterTruck', 
-                alife: false, 
+                name: 'monsterTrack', 
                 icon: '💩'
             });
         }
@@ -122,8 +118,7 @@ export class game{
                 type: types.TRACK,
                 kill: false, 
                 takeable: false, 
-                name: 'monsterTruck', 
-                alife: false, 
+                name: 'monsterTrack', 
                 icon: '💩'
             });
         }
@@ -138,7 +133,6 @@ export class game{
                     kill: true, 
                     takeable: false, 
                     name: 'hole', 
-                    alife: false, 
                     icon: '🕳️'
                 });
                 this.addHoleTracks(row, col)
@@ -155,7 +149,6 @@ export class game{
                 kill: false, 
                 takeable: false, 
                 name: 'holeTruck', 
-                alife: false, 
                 icon: '💨'
             });
         }
@@ -165,7 +158,6 @@ export class game{
                 kill: false, 
                 takeable: false, 
                 name: 'holeTruck', 
-                alife: false, 
                 icon: '💨'
             });
         }
@@ -175,7 +167,6 @@ export class game{
                 kill: false, 
                 takeable: false, 
                 name: 'holeTruck', 
-                alife: false, 
                 icon: '💨'
             });
         }
@@ -185,7 +176,6 @@ export class game{
                 kill: false, 
                 takeable: false, 
                 name: 'holeTruck', 
-                alife: false, 
                 icon: '💨'
             });
         }
@@ -231,7 +221,7 @@ export class game{
             case directions.RIGHT:
                 this.moveHeroRight();
                 break;
-         }
+        }
     }
 
     moveHeroUp(){
@@ -241,6 +231,7 @@ export class game{
             this.isCellOccupiedByKiller(this.heroPosition.row,this.heroPosition.col) ? this.gameOver(this.heroPosition.row,this.heroPosition.col) : this.board[this.heroPosition.row][this.heroPosition.col].addHero();  
         }
     }
+
     moveHeroDown(){
         if(this.heroPosition.row < this.board.length - 1){
             this.board[this.heroPosition.row][this.heroPosition.col].removeHero();
@@ -248,6 +239,7 @@ export class game{
             this.isCellOccupiedByKiller(this.heroPosition.row,this.heroPosition.col) ? this.gameOver(this.heroPosition.row,this.heroPosition.col) : this.board[this.heroPosition.row][this.heroPosition.col].addHero();  
         }
     }
+
     moveHeroLeft(){
         if(this.heroPosition.col > 0){
             this.board[this.heroPosition.row][this.heroPosition.col].removeHero();
@@ -255,6 +247,7 @@ export class game{
             this.isCellOccupiedByKiller(this.heroPosition.row,this.heroPosition.col) ? this.gameOver(this.heroPosition.row,this.heroPosition.col) : this.board[this.heroPosition.row][this.heroPosition.col].addHero();  
         }
     }
+
     moveHeroRight(){
         if(this.heroPosition.col < this.board[0].length - 1){
             this.board[this.heroPosition.row][this.heroPosition.col].removeHero();
@@ -270,8 +263,46 @@ export class game{
 
     shot(){
         this.addMove()
-        if(this.arrows != 0) this.arrows--;
+        if(this.arrows != 0){
+            this.arrows--;
+            switch (this.heroDirection) {
+                case directions.UP:
+                    if(this.heroPosition.col == this.MonsterPosition.col && this.heroPosition.row > this.MonsterPosition.row) this.monsterKilled();
+                    break;
+                case directions.DOWN:
+                    if(this.heroPosition.col == this.MonsterPosition.col && this.heroPosition.row < this.MonsterPosition.row) this.monsterKilled();
+                    break;
+                case directions.LEFT:
+                    if(this.heroPosition.col > this.MonsterPosition.col && this.heroPosition.row == this.MonsterPosition.row) this.monsterKilled();
+                    break;
+                case directions.RIGHT:
+                    if(this.heroPosition.col < this.MonsterPosition.col && this.heroPosition.row == this.MonsterPosition.row) this.monsterKilled();
+                    break;
+            }
+        }
     }
+
+    monsterKilled(){
+        this.monsterDeath = true;
+        let row: number = this.MonsterPosition.row;
+        let col: number = this.MonsterPosition.col;
+
+        this.board[row][col].content = this.board[row][col].content?.filter(content => content.type != types.OBJECT);
+        //TODO buscar otra manera de eliminar las pistas del monstruo que nos sea mediante un string
+        if(row > 0){
+            this.board[row - 1][col].content = this.board[row - 1][col].content?.filter(content => content.name != "monsterTrack" );
+        }
+        if(row < this.cells - 1){
+            this.board[row + 1][col].content = this.board[row + 1][col].content?.filter(content => content.name != "monsterTrack" );
+        }
+        if(col > 0){
+            this.board[row][col - 1].content = this.board[row][col - 1].content?.filter(content => content.name != "monsterTrack" );
+        }
+        if(col < this.cells - 1){
+            this.board[row][col + 1].content = this.board[row][col + 1].content?.filter(content => content.name != "monsterTrack" );
+        }
+    }
+
     getGold(){
         let cell = this.board[this.heroPosition.row][this.heroPosition.col];
         this.addMove()

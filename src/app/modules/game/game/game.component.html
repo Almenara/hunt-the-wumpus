@@ -17,7 +17,7 @@
 </div>
 <div>
     <button type="button" *ngIf="game.arrows" (click)="game.shot()">SHOT ARROW [ {{game.arrows}} ]</button>
-    <button type="button" *ngIf="game.arrows" (click)="game.getGold()">GET GOLD</button>
+    <button type="button" (click)="game.getGold()">GET GOLD</button>
 </div>
 <!--button type="button" (click)="game.moveHeroUp()">UP</button>
 <button type="button" (click)="game.moveHeroDown()">DOWN</button>
