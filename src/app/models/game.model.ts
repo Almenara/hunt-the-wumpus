@@ -13,6 +13,9 @@ export class game{
     heroDirection   : directions = directions.UP;
     heroDeath       : boolean = false;
     monsterDeath    : boolean = false;
+    MonsterPosition : {row : number , col : number} = {row : 0, col : 0};
+    hasGold         : boolean = false;
+    playerWin       : boolean = false;
 
     board   : cell[][] = [];   
 
@@ -77,6 +80,7 @@ export class game{
                 alife: true, 
                 icon: '🧌'
             });
+            this.MonsterPosition = {row,col};
             this.addMonsterTracks(row,col);
         }
         else this.addMonsterToBoard();
@@ -271,7 +275,12 @@ export class game{
     getGold(){
         let cell = this.board[this.heroPosition.row][this.heroPosition.col];
         this.addMove()
-        cell.content?.forEach( item => { if(item.takeable) this.score += 1000 })
+        cell.content?.forEach( item => { 
+            if(item.takeable){
+                this.score += 1000;
+                this.hasGold = true;
+            } 
+        })
         cell.content = cell.content?.filter(item => !item.takeable);
     }
 
@@ -284,10 +293,20 @@ export class game{
         console.log('total moves:',this.totalMoves)
     }
 
+    heroIsAtExit(){
+        return this.heroPosition.row == this.cells - 1 && this.heroPosition.col == 0;
+    }
 
     gameOver(row:number, col:number){
+        this.heroDeath = true;
         this.board[this.heroPosition.row][this.heroPosition.col].shown=true
         alert('¡¡MUERTO!!')
     }
 
+    exit(){
+        if(this.hasGold && this.heroIsAtExit()){
+            this.playerWin = true;
+            alert('You Win!!')
+        }
+    }
 }
