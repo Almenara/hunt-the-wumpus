@@ -11,6 +11,8 @@ export class game{
     score           : number = 0;
     heroPosition    : {row : number , col : number} = {row : 0, col : 0};
     heroDirection   : directions = directions.UP;
+    heroDeath       : boolean = false;
+    monsterDeath    : boolean = false;
 
     board   : cell[][] = [];   
 
@@ -232,29 +234,34 @@ export class game{
         if(this.heroPosition.row > 0){
             this.board[this.heroPosition.row][this.heroPosition.col].removeHero();
             this.heroPosition.row--;
-            this.board[this.heroPosition.row][this.heroPosition.col].addHero();
+            this.isCellOccupiedByKiller(this.heroPosition.row,this.heroPosition.col) ? this.gameOver(this.heroPosition.row,this.heroPosition.col) : this.board[this.heroPosition.row][this.heroPosition.col].addHero();  
         }
     }
     moveHeroDown(){
         if(this.heroPosition.row < this.board.length - 1){
             this.board[this.heroPosition.row][this.heroPosition.col].removeHero();
             this.heroPosition.row++;
-            this.board[this.heroPosition.row][this.heroPosition.col].addHero();
+            this.isCellOccupiedByKiller(this.heroPosition.row,this.heroPosition.col) ? this.gameOver(this.heroPosition.row,this.heroPosition.col) : this.board[this.heroPosition.row][this.heroPosition.col].addHero();  
         }
     }
     moveHeroLeft(){
         if(this.heroPosition.col > 0){
             this.board[this.heroPosition.row][this.heroPosition.col].removeHero();
             this.heroPosition.col--;
-            this.board[this.heroPosition.row][this.heroPosition.col].addHero();
+            this.isCellOccupiedByKiller(this.heroPosition.row,this.heroPosition.col) ? this.gameOver(this.heroPosition.row,this.heroPosition.col) : this.board[this.heroPosition.row][this.heroPosition.col].addHero();  
         }
     }
     moveHeroRight(){
         if(this.heroPosition.col < this.board[0].length - 1){
             this.board[this.heroPosition.row][this.heroPosition.col].removeHero();
             this.heroPosition.col++;
-            this.board[this.heroPosition.row][this.heroPosition.col].addHero();
+            this.isCellOccupiedByKiller(this.heroPosition.row,this.heroPosition.col) ? this.gameOver(this.heroPosition.row,this.heroPosition.col) : this.board[this.heroPosition.row][this.heroPosition.col].addHero();  
         }
+    }
+
+    isCellOccupiedByKiller(row: number, col: number):boolean{
+        //TODO Indicar la clase de pista de otra manera que no sea un string
+        return this.board[row][col].content?.filter( element => element.kill).length ? true : false
     }
 
     shot(){
@@ -275,6 +282,12 @@ export class game{
     addMove(){
         this.totalMoves++;
         console.log('total moves:',this.totalMoves)
+    }
+
+
+    gameOver(row:number, col:number){
+        this.board[this.heroPosition.row][this.heroPosition.col].shown=true
+        alert('¡¡MUERTO!!')
     }
 
 }
