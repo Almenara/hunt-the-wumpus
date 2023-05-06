@@ -35,7 +35,8 @@ table{
                     justify-content: center;
                 }
                 &::before{
-                    content: "🏹";
+                    content: "";
+                    opacity: 0;
                     right: auto;
                     position: absolute;
                     display: flex;
@@ -69,6 +70,12 @@ table{
                 &.direction-3{
                     &::after{
                         content: "⬅️";
+                    }
+                }
+                &.has-arrows{
+                    &::before{
+                        content: "🏹";
+                        opacity: 1;
                     }
                 }
             }

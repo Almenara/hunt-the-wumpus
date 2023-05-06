@@ -12,9 +12,9 @@ export class StarterComponent {
   public game! : game;
 
   public gameOptionsForm: FormGroup = this.fb.group({
-    cells:          [4, [Validators.required, Validators.min(4)]],
-    holes:          [2, [Validators.required, Validators.min(2)]],
-    arrows:         [1, [Validators.required, Validators.min(1)]],
+    cells:  [4, [Validators.required, Validators.min(4)]],
+    holes:  [2, [Validators.required, Validators.min(2)]],
+    arrows: [1, [Validators.required, Validators.min(1)]],
   })
   
   constructor(

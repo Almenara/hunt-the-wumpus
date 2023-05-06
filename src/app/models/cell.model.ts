@@ -1,14 +1,16 @@
+import { content } from "./content.model";
+
 export class cell{
     id      : number;
     shown   : boolean;
-    content : null | string[];
+    content : undefined | content[];
     hero    : boolean;
 
 
     constructor(data: any){
         this.id         = data.id;
         this.shown      = false;
-        this.content    = null;
+        this.content    = undefined;
         this.hero       = false;
     }
 
@@ -22,6 +24,11 @@ export class cell{
     }
     removeHero(){
         this.hero = false;
+    }
+
+    addObject( boardElement: {} ){
+        if(this.content == null) this.content = [];
+        this.content.push(new content(boardElement));
     }
 
 }
