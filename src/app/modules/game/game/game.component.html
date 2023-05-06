@@ -3,6 +3,8 @@
         <td *ngFor="let cell of row" id="{{'cell-' + cell.id}}" 
         [ngClass]="{'hidden' : !cell.shown}" >
             <!--span>{{cell.id}}</span-->
+            <!--TODO mejorar maquetación de pistas
+                Al estar en la misma celda el oro y una sola pista, esta se centra. Debería quedar a la izquierda-->
             <span *ngFor="let item of cell.content" class="cell-content" [ngClass]="{'big' : item.kill, 'track' : item.type == 0}">{{item.icon}}</span>
             <div *ngIf="cell.hero" id="hero" class="direction-{{game.heroDirection}}" [ngClass]="{'has-arrows' : game.arrows}" >🦸</div>
         </td>
@@ -15,10 +17,10 @@
 </div>
 <div>
     <button type="button" *ngIf="game.arrows" (click)="game.shot()">SHOT ARROW [ {{game.arrows}} ]</button>
-    <button type="button" *ngIf="game.arrows" (click)="game.getGold()">GET GOLD</button>
+    <button type="button" (click)="game.getGold()">GET GOLD</button>
 </div>
 <!--button type="button" (click)="game.moveHeroUp()">UP</button>
 <button type="button" (click)="game.moveHeroDown()">DOWN</button>
 <button type="button" (click)="game.moveHeroLeft()">LEFT</button>
 <button type="button" (click)="game.moveHeroRight()">RIGHT</button-->
-<button type="button" (click)="game.addGoldToBoard()">LEFT</button>
+<button type="button" (click)="game.exit()">EXIT</button>    
