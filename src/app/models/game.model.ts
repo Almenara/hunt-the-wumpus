@@ -45,6 +45,7 @@ export class game{
     addGameElementsToBoard(){
         this.addGoldToBoard();
         this.addMonsterToBoard();
+        this.addHoleToBoard();
     }
     
     addGoldToBoard(){
@@ -65,7 +66,7 @@ export class game{
     addMonsterToBoard(){
         let row = this.getRandomCell();
         let col = this.getRandomCell();
-        if(!this.isCellOccupied(row, col))
+        if(!this.isCellOccupied(row, col)){
             this.board[row][col].addObject({
                 type: types.OBJECT,
                 kill: true, 
@@ -74,7 +75,123 @@ export class game{
                 alife: true, 
                 icon: '🧌'
             });
-        else this.addGoldToBoard();
+            this.addMonsterTracks(row,col);
+        }
+        else this.addMonsterToBoard();
+    }
+
+    addMonsterTracks(row: number, col: number){
+        if(row > 0){
+            this.board[row - 1][col].addObject({
+                type: types.TRACK,
+                kill: false, 
+                takeable: false, 
+                name: 'monsterTruck', 
+                alife: false, 
+                icon: '💩'
+            });
+        }
+        if(row < this.cells - 1){
+            this.board[row + 1][col].addObject({
+                type: types.TRACK,
+                kill: false, 
+                takeable: false, 
+                name: 'monsterTruck', 
+                alife: false, 
+                icon: '💩'
+            });
+        }
+        if(col > 0){
+            this.board[row][col - 1].addObject({
+                type: types.TRACK,
+                kill: false, 
+                takeable: false, 
+                name: 'monsterTruck', 
+                alife: false, 
+                icon: '💩'
+            });
+        }
+        if(col < this.cells - 1){
+            this.board[row][col + 1].addObject({
+                type: types.TRACK,
+                kill: false, 
+                takeable: false, 
+                name: 'monsterTruck', 
+                alife: false, 
+                icon: '💩'
+            });
+        }
+    }
+    addHoleToBoard(){
+        for(let i = 0; i < this.holes; i ++){
+            let row = this.getRandomCell();
+            let col = this.getRandomCell();
+            if(!this.isCellOccupied(row, col)){
+                this.board[row][col].addObject({
+                    type: types.OBJECT,
+                    kill: true, 
+                    takeable: false, 
+                    name: 'hole', 
+                    alife: false, 
+                    icon: '🕳️'
+                });
+                this.addHoleTracks(row, col)
+            }
+            else i--;    
+        }
+
+    }
+
+    addHoleTracks(row: number, col: number){
+        if(row > 0 && !this.isCellOccupiedByHoleTrack(row - 1, col)){
+            this.board[row - 1][col].addObject({
+                type: types.TRACK,
+                kill: false, 
+                takeable: false, 
+                name: 'holeTruck', 
+                alife: false, 
+                icon: '💨'
+            });
+        }
+        if(row < this.cells - 1 && !this.isCellOccupiedByHoleTrack(row + 1, col)){
+            this.board[row + 1][col].addObject({
+                type: types.TRACK,
+                kill: false, 
+                takeable: false, 
+                name: 'holeTruck', 
+                alife: false, 
+                icon: '💨'
+            });
+        }
+        if(col > 0 && !this.isCellOccupiedByHoleTrack(row, col - 1)){
+            this.board[row][col - 1].addObject({
+                type: types.TRACK,
+                kill: false, 
+                takeable: false, 
+                name: 'holeTruck', 
+                alife: false, 
+                icon: '💨'
+            });
+        }
+        if(col < this.cells - 1 && !this.isCellOccupiedByHoleTrack(row, col + 1)){
+            this.board[row][col + 1].addObject({
+                type: types.TRACK,
+                kill: false, 
+                takeable: false, 
+                name: 'holeTruck', 
+                alife: false, 
+                icon: '💨'
+            });
+        }
+    }
+
+    isCellOccupied(row : number, col : number):boolean{
+        return (row == this.cells - 1 && col == 0) || this.board[row][col].content?.filter( element => element.type == types.OBJECT) ? true : false;
+    }
+
+    isCellOccupiedByHoleTrack(row: number, col: number):boolean{
+        //TODO Indicar la clase de pista de otra manera que no sea un string
+        return this.board[row][col].content?.filter( element => element.name == "holeTruck").length ? true : false
     }
 
     addHeroOnStartCell(){
@@ -153,12 +270,6 @@ export class game{
 
     getRandomCell():number{
         return Math.floor(Math.random() * this.cells)
-    }
-
-    isCellOccupied(row : number, col : number):boolean{
-        if(row == this.cells - 1 && col == 0) return true;
-        if( this.board[row][col].content?.filter(element => element.type != 0 )) return true
-        return false;
     }
 
     addMove(){
