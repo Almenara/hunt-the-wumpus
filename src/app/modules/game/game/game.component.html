@@ -12,17 +12,19 @@
         </td>
     </tr>
 </table>
-<div>
-    <button type="button" (click)="game.turnLeftHero()">TURN LEFT</button>
-    <button type="button" (click)="game.moveHero()">MOVE</button>
-    <button type="button" (click)="game.turnRightHero()">TURN RIGHT</button>
-</div>
-<div>
-    <button type="button" *ngIf="game.arrows" (click)="game.shot()">SHOT ARROW [ {{game.arrows}} ]</button>
-    <button type="button" (click)="game.getGold()">GET GOLD</button>
+<div id="controls" *ngIf="!game.playerWin && !game.heroDeath">
+    <div>
+        <button type="button" (click)="game.turnLeftHero()">TURN LEFT</button>
+        <button type="button" (click)="game.moveHero()">MOVE</button>
+        <button type="button" (click)="game.turnRightHero()">TURN RIGHT</button>
+    </div>
+    <div>
+        <button type="button" *ngIf="game.arrows" (click)="game.shot()">SHOT ARROW [ {{game.arrows}} ]</button>
+        <button type="button" (click)="game.getGold()">GET GOLD</button>
+    </div>
+    <button type="button" (click)="game.exit()">EXIT</button>    
 </div>
 <!--button type="button" (click)="game.moveHeroUp()">UP</button>
 <button type="button" (click)="game.moveHeroDown()">DOWN</button>
 <button type="button" (click)="game.moveHeroLeft()">LEFT</button>
 <button type="button" (click)="game.moveHeroRight()">RIGHT</button-->
-<button type="button" (click)="game.exit()">EXIT</button>    

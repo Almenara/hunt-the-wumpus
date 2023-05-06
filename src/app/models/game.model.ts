@@ -197,30 +197,36 @@ export class game{
     }
 
     turnLeftHero(){
-        this.addMove()
-        this.heroDirection = this.heroDirection == 0 ? 3 : this.heroDirection - 1
+        if(!this.heroDeath && !this.playerWin){
+            this.addMove();
+            this.heroDirection = this.heroDirection == 0 ? 3 : this.heroDirection - 1;
+        }
     }
 
     turnRightHero(){
-        this.addMove()
-        this.heroDirection = this.heroDirection == 3 ? 0 : this.heroDirection + 1
+        if(!this.heroDeath && !this.playerWin){
+            this.addMove();
+            this.heroDirection = this.heroDirection == 3 ? 0 : this.heroDirection + 1;
+        }
     }
 
     moveHero(){
-        this.addMove()
-        switch (this.heroDirection) {
-            case directions.UP:
-                this.moveHeroUp();
-                break;
-            case directions.DOWN:
-                this.moveHeroDown();
-                break;
-            case directions.LEFT:
-                this.moveHeroLeft();
-                break;
-            case directions.RIGHT:
-                this.moveHeroRight();
-                break;
+        if(!this.heroDeath && !this.playerWin){
+            this.addMove()
+            switch (this.heroDirection) {
+                case directions.UP:
+                    this.moveHeroUp();
+                    break;
+                case directions.DOWN:
+                    this.moveHeroDown();
+                    break;
+                case directions.LEFT:
+                    this.moveHeroLeft();
+                    break;
+                case directions.RIGHT:
+                    this.moveHeroRight();
+                    break;
+            }
         }
     }
 
@@ -262,22 +268,28 @@ export class game{
     }
 
     shot(){
-        this.addMove()
-        if(this.arrows != 0){
-            this.arrows--;
-            switch (this.heroDirection) {
-                case directions.UP:
-                    if(this.heroPosition.col == this.MonsterPosition.col && this.heroPosition.row > this.MonsterPosition.row) this.monsterKilled();
-                    break;
-                case directions.DOWN:
-                    if(this.heroPosition.col == this.MonsterPosition.col && this.heroPosition.row < this.MonsterPosition.row) this.monsterKilled();
-                    break;
-                case directions.LEFT:
-                    if(this.heroPosition.col > this.MonsterPosition.col && this.heroPosition.row == this.MonsterPosition.row) this.monsterKilled();
-                    break;
-                case directions.RIGHT:
-                    if(this.heroPosition.col < this.MonsterPosition.col && this.heroPosition.row == this.MonsterPosition.row) this.monsterKilled();
-                    break;
+        if(!this.heroDeath && !this.playerWin){
+            this.addMove()
+            if(this.arrows != 0 && !this.heroDeath){
+                this.arrows--;
+                switch (this.heroDirection) {
+                    case directions.UP:
+                        if(this.heroPosition.col == this.MonsterPosition.col && this.heroPosition.row > this.MonsterPosition.row) this.monsterKilled();
+                        break;
+                    case directions.DOWN:
+                        if(this.heroPosition.col == this.MonsterPosition.col && this.heroPosition.row < this.MonsterPosition.row) this.monsterKilled();
+                        break;
+                    case directions.LEFT:
+                        if(this.heroPosition.col > this.MonsterPosition.col && this.heroPosition.row == this.MonsterPosition.row) this.monsterKilled();
+                        break;
+                    case directions.RIGHT:
+                        if(this.heroPosition.col < this.MonsterPosition.col && this.heroPosition.row == this.MonsterPosition.row) this.monsterKilled();
+                        break;
+                }
+                if(!this.monsterDeath){
+                    //TODO mostrar mensaje de fallo en el disparo de forma ams vistosa
+                    alert ('Fallo!')
+                }
             }
         }
     }
@@ -301,6 +313,7 @@ export class game{
         if(col < this.cells - 1){
             this.board[row][col + 1].content = this.board[row][col + 1].content?.filter(content => content.name != "monsterTrack" );
         }
+        //TODO mostrar mensaje de el Wumpus a muerto
     }
 
     getGold(){
@@ -321,7 +334,7 @@ export class game{
 
     addMove(){
         this.totalMoves++;
-        console.log('total moves:',this.totalMoves)
+        //TODO mostrar total de movimientos hechos
     }
 
     heroIsAtExit(){
@@ -331,13 +344,17 @@ export class game{
     gameOver(row:number, col:number){
         this.heroDeath = true;
         this.board[this.heroPosition.row][this.heroPosition.col].shown=true
+        //TODO cambiar alert por algo más vistoso
         alert('¡¡MUERTO!!')
     }
 
     exit(){
-        if(this.hasGold && this.heroIsAtExit()){
-            this.playerWin = true;
-            alert('You Win!!')
+        if(!this.heroDeath && !this.playerWin){
+            if(this.hasGold && this.heroIsAtExit()){
+                this.playerWin = true;
+                //TODO cambiar alert por algo más vistoso
+                alert('You Win!!')
+            }
         }
     }
 }
