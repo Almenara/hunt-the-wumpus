@@ -12,4 +12,4 @@ Instala todas las dependecias del juego con el comando "npm install".
 Levanta un servidor local desde el terminal con el comando "ng serve".
 Entra en http://localhost:4200/ en tu navegador web para jugar a Hunt The Wumpus.
 
-## ¡Buena caza!
+### ¡Buena caza!
