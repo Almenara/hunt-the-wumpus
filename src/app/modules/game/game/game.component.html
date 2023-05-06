@@ -2,7 +2,8 @@
     <tr *ngFor="let row of game.board">
         <td *ngFor="let cell of row" id="{{'cell-' + cell.id}}" 
         [ngClass]="{'hidden' : !cell.shown, 'hola' : true && cell.shown}" >
-            {{cell.id}}
+            <span>{{cell.id}}</span>
+            <span *ngFor="let item of cell.content">{{item.icon}}</span>
             <div *ngIf="cell.hero" id="hero" class="direction-{{game.heroDirection}}" [ngClass]="{'has-arrows' : game.arrows}" >🦸</div>
         </td>
     </tr>
@@ -13,9 +14,11 @@
     <button type="button" (click)="game.turnRightHero()">TURN RIGHT</button>
 </div>
 <div>
-    <button type="button" (click)="game.shot()">SHOT ARROW</button>
+    <button type="button" *ngIf="game.arrows" (click)="game.shot()">SHOT ARROW [ {{game.arrows}} ]</button>
+    <button type="button" *ngIf="game.arrows" (click)="game.getGold()">GET GOLD</button>
 </div>
 <!--button type="button" (click)="game.moveHeroUp()">UP</button>
 <button type="button" (click)="game.moveHeroDown()">DOWN</button>
 <button type="button" (click)="game.moveHeroLeft()">LEFT</button>
 <button type="button" (click)="game.moveHeroRight()">RIGHT</button-->
+<button type="button" (click)="game.addGoldToBoard()">LEFT</button>
