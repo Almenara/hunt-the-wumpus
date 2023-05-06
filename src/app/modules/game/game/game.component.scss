@@ -1,0 +1,122 @@
+table{
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid gray;
+    margin-bottom: 50px;
+    tr{
+        height: 100px;
+        td{
+            box-sizing: border-box;
+            position: relative;
+            min-width: 100px;
+            border: 1px solid gray;
+            
+            &.hidden{
+                background-color: black;
+            }
+            #hero{
+                position: absolute;
+                display: flex;
+                height: 100%;
+                width: 100%;
+                top: 0;
+                left: 0;
+                font-size: 60px;
+                align-items: center;
+                justify-content: center;
+                padding-top: 7px;
+
+                &::after{
+                    content: "";
+                    font-size: 28px;
+                    position: absolute;
+                    display: flex;
+                    height: 24px;
+                    width: 24px;
+                    bottom: 16px;
+                    right: 11px;
+                    align-items: center;
+                    justify-content: center;
+                }
+                &::before{
+                    content: "";
+                    opacity: 0;
+                    right: auto;
+                    position: absolute;
+                    display: flex;
+                    font-size: 19px;
+                    left: 11px;
+                    height: 20px;
+                    width: 20px;
+                    bottom: 16px;
+                    background-color: white;
+                    border: 1px solid black;
+                    border-radius: 6px;
+                    padding: 2px;
+                    align-items: center;
+                    justify-content: center;
+                }
+                &.direction-0{
+                    &::after{
+                        content: "⬆️";
+                    }
+                }
+                &.direction-1{
+                    &::after{
+                        content: "➡️";
+                    }
+                }
+                &.direction-2{
+                    &::after{
+                        content: "⬇️";
+                    }
+                }
+                &.direction-3{
+                    &::after{
+                        content: "⬅️";
+                    }
+                }
+                &.has-arrows{
+                    &::before{
+                        content: "🏹";
+                        opacity: 1;
+                    }
+                }
+            }
+            .cell-content{
+                position: absolute;
+                display: flex;
+                height: 20px;
+                width: 20px;
+                top: 11px;
+                right: 11px;
+                font-size: 20px;
+                align-items: center;
+                justify-content: center;
+                background-color: white;
+                border: 1px solid black;
+                border-radius: 6px;
+                padding: 3px 2px 1px;
+
+                &.big{
+                    height: 100%;
+                    width: 100%;
+                    top: 0;
+                    left: 0;
+                    font-size: 60px;
+                    background-color: transparent;
+                    border: none;
+                }
+                &.track{
+                    background-color: orange;
+                    right: auto;
+                    left: 11px;
+
+                    &:nth-of-type(2){
+                        left: 36px;
+                    }
+                }
+            }
+        }
+    }
+}
