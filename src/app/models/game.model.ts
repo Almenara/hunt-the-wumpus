@@ -1,4 +1,3 @@
-import { content } from './content.model';
 import { directions } from "./enums/directions.enum";
 import { types } from "./enums/types.enum";
 
