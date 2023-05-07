@@ -4,11 +4,6 @@ import { MainComponent } from './layout/main/main.component';
 
 const routes: Routes = [ 
   {
-    path: 'starter',
-    pathMatch: 'full',
-    component: MainComponent
-  },
-  {
     path: 'game',
     pathMatch: 'full',
     component: MainComponent
