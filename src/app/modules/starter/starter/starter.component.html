@@ -1,15 +1,15 @@
 <form *ngIf="!gameStarted" [formGroup]="gameOptionsForm" class="d-flex flex-column just-content-center mt-5 mb-5">
     <fieldset>
-        <label for="cells">Cells: </label>
-        <input [min]="4" formControlName="cells" type="number" name="cells" placeholder="Cells">
+        <label for="cells">Cells (max: 9): </label>
+        <input [min]="4" [max]="9" (ngModelChange)="cellsChanges()" formControlName="cells" type="number" name="cells" placeholder="Cells">
     </fieldset>
     <fieldset>
-        <label for="holes">Holes: </label>
-        <input [min]="2" formControlName="holes" type="number" name="holes" placeholder="Holes">
+        <label for="holes">Holes (max: {{maxHoles}}): </label>
+        <input [min]="0" [max]="maxHoles" formControlName="holes" type="number" name="holes" placeholder="Holes">
     </fieldset>
     <fieldset>
-        <label for="arrows">Arrows: </label>
-        <input [min]="1" formControlName="arrows" type="number" name="arrows" placeholder="Arrows">
+        <label for="arrows">Arrows (max: 10): </label>
+        <input [min]="1" [max]="10" formControlName="arrows" type="number" name="arrows" placeholder="Arrows">
     </fieldset>
     
     <fieldset>
