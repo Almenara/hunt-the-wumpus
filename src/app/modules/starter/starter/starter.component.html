@@ -1,19 +1,22 @@
-<form *ngIf="!gameStarted" [formGroup]="gameOptionsForm" class="d-flex flex-column just-content-center mt-5 mb-5">
-    <fieldset>
-        <label for="cells">Cells: </label>
-        <input [min]="4" formControlName="cells" type="number" name="cells" placeholder="Cells">
-    </fieldset>
-    <fieldset>
-        <label for="holes">Holes: </label>
-        <input [min]="2" formControlName="holes" type="number" name="holes" placeholder="Holes">
-    </fieldset>
-    <fieldset>
-        <label for="arrows">Arrows: </label>
-        <input [min]="1" formControlName="arrows" type="number" name="arrows" placeholder="Arrows">
-    </fieldset>
-    
-    <fieldset>
-        <button type="button" class="mt-4" [disabled]="!gameOptionsForm.valid" (click)="startGame()">Start</button>
-    </fieldset>
-</form>
-<app-game *ngIf="gameStarted" [game]="game"></app-game>
+<div class="container">
+    <h1 *ngIf="!gameStarted">Hunt The Wumpus</h1>
+    <form *ngIf="!gameStarted" [formGroup]="gameOptionsForm" class="d-flex flex-column just-content-center mt-5 mb-5">
+        <fieldset>
+            <label for="cells">Cells (max: 9): </label>
+            <input [min]="4" [max]="9" (ngModelChange)="cellsChanges()" id="cells" formControlName="cells" type="number" name="cells" placeholder="Cells">
+        </fieldset>
+        <fieldset>
+            <label for="holes">Holes (max: {{maxHoles}}): </label>
+            <input [min]="0" [max]="maxHoles" id="holes" formControlName="holes" type="number" name="holes" placeholder="Holes">
+        </fieldset>
+        <fieldset>
+            <label for="arrows">Arrows (max: 10): </label>
+            <input [min]="1" [max]="10" id="arrows" formControlName="arrows" type="number" name="arrows" placeholder="Arrows">
+        </fieldset>
+        
+        <fieldset>
+            <button type="button" class="mt-4" [disabled]="!gameOptionsForm.valid" (click)="startGame()">Start</button>
+        </fieldset>
+    </form>
+</div>
+<app-game *ngIf="gameStarted && game" [game]="game" (gameOver)="gameOver(true)"></app-game>

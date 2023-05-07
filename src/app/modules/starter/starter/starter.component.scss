@@ -1,0 +1,68 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 400px;
+    fieldset{
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &:last-child{
+            margin-top: 50px;
+            justify-content: center;
+        }
+        label{
+            font-size: 22px;
+            margin-top: 6px;
+        }
+        input{
+            font-size: 22px;
+            width: 50px;
+            text-align: center;
+            border: 2px solid #221A0D;
+            border-radius: 4px;
+            padding-left: 12px;
+            padding-top: 8px;
+            height: 30px;
+            line-height: 40px;
+            background-color: #F0D596;
+            &.ng-invalid{
+                border-color:red;
+                color: red;
+            }
+        }
+        button{
+            font-size: 30px;
+            text-transform: uppercase;
+            padding: 12px 30px 5px;
+            border: 2px solid #221A0D;
+            border-radius: 4px;
+            background-color: #DFAD2E;
+            cursor: pointer;
+            &:hover{
+                background-color: #221A0D;
+                color: #DFAD2E;
+            }
+            &:disabled{
+
+                border-color: #555;
+                background-color: #CCC;
+                color:#555;
+                cursor: no-drop;
+            }
+        }
+    }
+}
+app-game{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
