@@ -77,7 +77,7 @@ export class game{
                 kill: true, 
                 takeable: false, 
                 name: 'monster', 
-                icon: '🧌'
+                icon: '👹'
             });
             this.MonsterPosition = {row,col};
             this.addMonsterTracks(row,col);
@@ -263,7 +263,6 @@ export class game{
     }
 
     isCellOccupiedByKiller(row: number, col: number):boolean{
-        //TODO Indicar la clase de pista de otra manera que no sea un string
         return this.board[row][col].content?.filter( element => element.kill).length ? true : false
     }
 

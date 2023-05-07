@@ -7,7 +7,7 @@
                 <!--TODO mejorar maquetación de pistas
                     Al estar en la misma celda el oro y una sola pista, esta se centra. Debería quedar a la izquierda-->
                 <span *ngFor="let item of cell.content" class="cell-content" [ngClass]="{'big' : item.kill, 'track' : item.type == 0}">{{item.icon}}</span>
-                <div *ngIf="cell.hero" id="hero" class="direction-{{game.heroDirection}}" [ngClass]="{'has-arrows' : game.arrows}" >🦸</div>
+                <div *ngIf="cell.hero" id="hero" class="direction-{{game.heroDirection}}" [ngClass]="{'has-arrows' : game.arrows}" >🕵️</div>
             </div>
         </td>
     </tr>

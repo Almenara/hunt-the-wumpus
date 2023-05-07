@@ -1,1 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
+
+@import url('https://fonts.googleapis.com/css2?family=Sigmar&family=Special+Elite&display=swap');
+
+body{
+    margin: 0;
+    display: flex;
+    min-width: 100vw;
+    min-height: 100vh;
+    background-color: #BEB7A0;
+    justify-content: center;
+    *{
+        font-family: 'Special Elite';
+        color:#221A0D;  
+        -moz-transition: all .15s ease-out;
+        -webkit-transition: all .15s ease-out;
+        -ms-transition: all .15s ease-out;
+        -o-transition: all .15s ease-out;
+        transition: all .15s ease-out;
+        outline: 0;
+    }    
+    h1{
+        color: orange;
+        font-family: 'Sigmar';
+        font-size: 5rem;
+        text-align: center;
+        background-clip: text;
+        background: -webkit-linear-gradient(orange, orange, yellow, white, white);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-fill-color: transparent;
+        -webkit-text-stroke: 1px #221A0D;
+        margin: 100px 0 50px;
+        padding: 0;
+    }
+}
