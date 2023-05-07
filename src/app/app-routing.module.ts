@@ -5,12 +5,12 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'starter',
+    redirectTo: 'game',
   },
   {
     path: '**',
     pathMatch: 'full',
-    redirectTo: 'starter',
+    redirectTo: 'game',
   }
 ];
 
