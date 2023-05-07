@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { game } from 'src/app/models/game.model';
 
