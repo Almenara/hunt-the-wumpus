@@ -1,30 +1,45 @@
-<table>
-    <tr *ngFor="let row of game.board">
-        <td *ngFor="let cell of row" id="{{'cell-' + cell.id}}" 
-        [ngClass]="{'hidden' : !cell.shown}" >
-            <div *ngIf="cell.shown">
-                <!--span>{{cell.id}}</span-->
-                <!--TODO mejorar maquetación de pistas
-                    Al estar en la misma celda el oro y una sola pista, esta se centra. Debería quedar a la izquierda-->
-                <span *ngFor="let item of cell.content" class="cell-content" [ngClass]="{'big' : item.kill, 'track' : item.type == 0}">{{item.icon}}</span>
-                <div *ngIf="cell.hero" id="hero" class="direction-{{game.heroDirection}}" [ngClass]="{'has-arrows' : game.arrows}" >🕵️</div>
-            </div>
-        </td>
-    </tr>
-</table>
+<h1>Hunt The Wumpus</h1>
+<div id="game-container">
+    <div id="game-stats">
+        <span>Moves: {{game.totalMoves}}</span>
+        <span>Arrows: {{game.arrows}}</span>
+        <span class="icon" *ngIf="game.hasGold">💰</span>
+        <span id="wumpus-hunted" class="icon" *ngIf="game.monsterDeath">👹</span>
+    </div>
+    <table>
+        <tr *ngFor="let row of game.board">
+            <td *ngFor="let cell of row" id="{{'cell-' + cell.id}}" 
+            [ngClass]="{'hidden' : !cell.shown}" >
+                <div *ngIf="cell.shown">
+                    <!--span>{{cell.id}}</span-->
+                    <!--TODO mejorar maquetación de pistas
+                        Al estar en la misma celda el oro y una sola pista, esta se centra. Debería quedar a la izquierda-->
+                    <span *ngFor="let item of cell.content" class="cell-content" [ngClass]="{'big' : item.kill, 'track' : item.type == 0}">{{item.icon}}</span>
+                    <div *ngIf="cell.hero" id="hero" class="direction-{{game.heroDirection}}" [ngClass]="{'has-arrows' : game.arrows}" >🕵️</div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div id="game-message">
+        {{game.gameMessage}}
+    </div>
+</div>
 <div id="controls" *ngIf="!game.playerWin && !game.heroDeath">
-    <div>
+    <div class="buttons-container">
         <button type="button" (click)="game.turnLeftHero()">TURN LEFT</button>
         <button type="button" (click)="game.moveHero()">MOVE</button>
         <button type="button" (click)="game.turnRightHero()">TURN RIGHT</button>
     </div>
-    <div>
-        <button type="button" *ngIf="game.arrows" (click)="game.shot()">SHOT ARROW [ {{game.arrows}} ]</button>
-        <button type="button" (click)="game.getGold()">GET GOLD</button>
+    <div class="buttons-container" *ngIf="game.arrows || !game.hasGold">
+        <button type="button" *ngIf="game.arrows" (click)="game.shot()">SHOT ARROW</button>
+        <button type="button" *ngIf="!game.hasGold" (click)="game.getGold()">GET GOLD</button>
     </div>
-    <button type="button" (click)="game.exit()">EXIT</button>    
+    <div class="buttons-container">
+        <button type="button" (click)="game.exit()">EXIT</button>    
+    </div>
 </div>
-<!--button type="button" (click)="game.moveHeroUp()">UP</button>
-<button type="button" (click)="game.moveHeroDown()">DOWN</button>
-<button type="button" (click)="game.moveHeroLeft()">LEFT</button>
-<button type="button" (click)="game.moveHeroRight()">RIGHT</button-->
+<div id="controls" *ngIf="game.playerWin || game.heroDeath">
+    <div class="buttons-container">
+        <button type="button" (click)="closeGame()">RETURN</button>
+    </div>
+</div>

@@ -14,9 +14,10 @@ export class game{
     heroDirection   : directions = directions.UP;
     heroDeath       : boolean = false;
     monsterDeath    : boolean = false;
-    MonsterPosition : {row : number , col : number} = {row : 0, col : 0};
+    monsterPosition : {row : number , col : number} = {row : 0, col : 0};
     hasGold         : boolean = false;
     playerWin       : boolean = false;
+    gameMessage     : string = "";  
 
     board   : cell[][] = [];   
 
@@ -79,7 +80,7 @@ export class game{
                 name: 'monster', 
                 icon: '👹'
             });
-            this.MonsterPosition = {row,col};
+            this.monsterPosition = {row,col};
             this.addMonsterTracks(row,col);
         }
         else this.addMonsterToBoard();
@@ -197,6 +198,7 @@ export class game{
     }
 
     turnLeftHero(){
+        this.gameMessage = "";
         if(!this.heroDeath && !this.playerWin){
             this.addMove();
             this.heroDirection = this.heroDirection == 0 ? 3 : this.heroDirection - 1;
@@ -204,6 +206,7 @@ export class game{
     }
 
     turnRightHero(){
+        this.gameMessage = "";
         if(!this.heroDeath && !this.playerWin){
             this.addMove();
             this.heroDirection = this.heroDirection == 3 ? 0 : this.heroDirection + 1;
@@ -211,6 +214,7 @@ export class game{
     }
 
     moveHero(){
+        this.gameMessage = "";
         if(!this.heroDeath && !this.playerWin){
             this.addMove()
             switch (this.heroDirection) {
@@ -236,6 +240,7 @@ export class game{
             this.heroPosition.row--;
             this.isCellOccupiedByKiller(this.heroPosition.row,this.heroPosition.col) ? this.gameOver(this.heroPosition.row,this.heroPosition.col) : this.board[this.heroPosition.row][this.heroPosition.col].addHero();  
         }
+        else this.gameMessage = "Against the wall";
     }
 
     moveHeroDown(){
@@ -244,6 +249,7 @@ export class game{
             this.heroPosition.row++;
             this.isCellOccupiedByKiller(this.heroPosition.row,this.heroPosition.col) ? this.gameOver(this.heroPosition.row,this.heroPosition.col) : this.board[this.heroPosition.row][this.heroPosition.col].addHero();  
         }
+        else this.gameMessage = "Against the wall";
     }
 
     moveHeroLeft(){
@@ -252,6 +258,7 @@ export class game{
             this.heroPosition.col--;
             this.isCellOccupiedByKiller(this.heroPosition.row,this.heroPosition.col) ? this.gameOver(this.heroPosition.row,this.heroPosition.col) : this.board[this.heroPosition.row][this.heroPosition.col].addHero();  
         }
+        else this.gameMessage = "Against the wall";
     }
 
     moveHeroRight(){
@@ -260,6 +267,7 @@ export class game{
             this.heroPosition.col++;
             this.isCellOccupiedByKiller(this.heroPosition.row,this.heroPosition.col) ? this.gameOver(this.heroPosition.row,this.heroPosition.col) : this.board[this.heroPosition.row][this.heroPosition.col].addHero();  
         }
+        else this.gameMessage = "Against the wall";
     }
 
     isCellOccupiedByKiller(row: number, col: number):boolean{
@@ -267,27 +275,28 @@ export class game{
     }
 
     shot(){
+        this.gameMessage = "";
+        
         if(!this.heroDeath && !this.playerWin){
             this.addMove()
             if(this.arrows != 0 && !this.heroDeath){
                 this.arrows--;
                 switch (this.heroDirection) {
                     case directions.UP:
-                        if(this.heroPosition.col == this.MonsterPosition.col && this.heroPosition.row > this.MonsterPosition.row) this.monsterKilled();
+                        if(this.heroPosition.col == this.monsterPosition.col && this.heroPosition.row > this.monsterPosition.row) this.monsterKilled();
                         break;
                     case directions.DOWN:
-                        if(this.heroPosition.col == this.MonsterPosition.col && this.heroPosition.row < this.MonsterPosition.row) this.monsterKilled();
+                        if(this.heroPosition.col == this.monsterPosition.col && this.heroPosition.row < this.monsterPosition.row) this.monsterKilled();
                         break;
                     case directions.LEFT:
-                        if(this.heroPosition.col > this.MonsterPosition.col && this.heroPosition.row == this.MonsterPosition.row) this.monsterKilled();
+                        if(this.heroPosition.col > this.monsterPosition.col && this.heroPosition.row == this.monsterPosition.row) this.monsterKilled();
                         break;
                     case directions.RIGHT:
-                        if(this.heroPosition.col < this.MonsterPosition.col && this.heroPosition.row == this.MonsterPosition.row) this.monsterKilled();
+                        if(this.heroPosition.col < this.monsterPosition.col && this.heroPosition.row == this.monsterPosition.row) this.monsterKilled();
                         break;
                 }
                 if(!this.monsterDeath){
-                    //TODO mostrar mensaje de fallo en el disparo de forma ams vistosa
-                    alert ('Fallo!')
+                    this.gameMessage = "Fail!"
                 }
             }
         }
@@ -295,8 +304,8 @@ export class game{
 
     monsterKilled(){
         this.monsterDeath = true;
-        let row: number = this.MonsterPosition.row;
-        let col: number = this.MonsterPosition.col;
+        let row: number = this.monsterPosition.row;
+        let col: number = this.monsterPosition.col;
 
         this.board[row][col].content = this.board[row][col].content?.filter(content => content.type != types.OBJECT);
         //TODO buscar otra manera de eliminar las pistas del monstruo que nos sea mediante un string
@@ -312,16 +321,19 @@ export class game{
         if(col < this.cells - 1){
             this.board[row][col + 1].content = this.board[row][col + 1].content?.filter(content => content.name != "monsterTrack" );
         }
-        //TODO mostrar mensaje de el Wumpus a muerto
+        
+        this.gameMessage = "You killed the Wumpus!"
     }
 
     getGold(){
+        this.gameMessage = ""
         let cell = this.board[this.heroPosition.row][this.heroPosition.col];
         this.addMove()
         cell.content?.forEach( item => { 
             if(item.takeable){
                 this.score += 1000;
                 this.hasGold = true;
+                this.gameMessage = "You got the gold!"
             } 
         })
         cell.content = cell.content?.filter(item => !item.takeable);
@@ -333,7 +345,6 @@ export class game{
 
     addMove(){
         this.totalMoves++;
-        //TODO mostrar total de movimientos hechos
     }
 
     heroIsAtExit(){
@@ -343,17 +354,22 @@ export class game{
     gameOver(row:number, col:number){
         this.heroDeath = true;
         this.board[this.heroPosition.row][this.heroPosition.col].shown=true
-        //TODO cambiar alert por algo más vistoso
-        alert('¡¡MUERTO!!')
+        this.gameMessage = "You died!"
     }
 
     exit(){
         if(!this.heroDeath && !this.playerWin){
             if(this.hasGold && this.heroIsAtExit()){
                 this.playerWin = true;
-                //TODO cambiar alert por algo más vistoso
-                alert('You Win!!')
+                this.gameMessage = "YOU WIN!"
+            }
+            else if(!this.hasGold && this.heroIsAtExit()){
+                this.gameMessage = "Get the gold to get out";
+            }
+            else if(!this.heroIsAtExit()){
+                this.gameMessage = "Go to door";
             }
         }
     }
+
 }
