@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { game } from 'src/app/models/game.model';
 
@@ -9,7 +9,7 @@ import { game } from 'src/app/models/game.model';
 })
 export class StarterComponent {
   public gameStarted : boolean = false;
-  public game! :       game;
+  public game! :       game | undefined;
   public maxHoles :    number = 2;
 
   public gameOptionsForm: FormGroup = this.fb.group({
@@ -31,4 +31,10 @@ export class StarterComponent {
     this.game = new game(this.gameOptionsForm.value);
     this.gameStarted = true;
   }
+
+  gameOver(over: boolean){
+      this.game = undefined;
+      this.gameStarted = false;
+  }
+
 }

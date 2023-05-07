@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 
 import { game } from 'src/app/models/game.model';
 
@@ -9,11 +9,15 @@ import { game } from 'src/app/models/game.model';
 })
 export class GameComponent implements OnInit {
 
-  @Input() game!:game
+  @Input() game!:game;
+  @Output() gameOver = new EventEmitter<boolean>();
 
   constructor(){
   }
-  
+  closeGame(){
+    this.gameOver.emit(true);
+  }
+
   ngOnInit() {
    // console.log(this.game);
   }
